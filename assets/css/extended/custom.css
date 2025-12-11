@@ -1,0 +1,5 @@
+article {
+    border: 2px solid #e0e0e0;   /* light gray border */
+    border-radius: 10px;         /* rounded corners (optional) */
+    padding: 55px;               /* space inside the border */
+}

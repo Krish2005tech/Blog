@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>How I Set Up This Blog (My Journey from Idea → Deployment) | Krish&#39;s Blog</title>
+<meta name="keywords" content="setup, hugo, cloudflare, blogging">
+<meta name="description" content="A detailed walkthrough of how I built this site using Hugo &#43; Cloudflare Pages, the decisions I made, the struggles I faced, and why I chose this stack.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/how-i-set-up-this-blog/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.56e978151330fe5c438d2b1d924855894e990da57b459df3818600bb4b011528.css" integrity="sha256-Vul4FRMw/lxDjSsdkkhViU6ZDaV7RZ3zgYYAu0sBFSg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/how-i-set-up-this-blog/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Krish&#39;s Blog (Alt + H)">Krish&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/krish-teckchandani/" title="LinkedIn">
+                    <span>LinkedIn</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/krish2005tech" title="GitHub">
+                    <span>GitHub</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      How I Set Up This Blog (My Journey from Idea → Deployment)
+    </h1>
+    <div class="post-description">
+      A detailed walkthrough of how I built this site using Hugo &#43; Cloudflare Pages, the decisions I made, the struggles I faced, and why I chose this stack.
+    </div>
+    <div class="post-meta"><span title='2025-12-11 00:00:00 +0000 UTC'>December 11, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>For a long time, I wanted a simple place on the internet where I could write about tech, document small wins, share problems I solve, or even drop personal thoughts. Not a fancy platform, not something overloaded with features — just a clean space where I could write <strong>my way</strong>, at my pace.</p>
+<p>And today… you&rsquo;re reading this on <strong>blog.krish2005.tech</strong> — my new home on the web.</p>
+<p>This is the story of how it came together.</p>
+<hr>
+<h1 id="-my-mindset-keep-it-simple-but-developer-friendly">🧠 <strong>My Mindset: Keep It Simple, But Developer-Friendly</strong><a hidden class="anchor" aria-hidden="true" href="#-my-mindset-keep-it-simple-but-developer-friendly">#</a></h1>
+<p>I knew I wanted a few things right from the start:</p>
+<ul>
+<li><strong>Minimal setup</strong> — because I don&rsquo;t want to spend weeks installing plugins.</li>
+<li><strong>Fast &amp; lightweight</strong> — no bloat, no unnecessary JS.</li>
+<li><strong>Markdown-based</strong> — writing should feel natural.</li>
+<li><strong>Free hosting</strong> — because why pay for something simple?</li>
+<li><strong>Customizable later as I grow</strong> — I&rsquo;m a developer; I <em>will</em> tweak things.</li>
+</ul>
+<p>Basically:<br>
+I wanted something like Medium&rsquo;s simplicity, but with GitHub-level control.</p>
+<hr>
+<h1 id="-options-i-considered">🔍 <strong>Options I Considered</strong><a hidden class="anchor" aria-hidden="true" href="#-options-i-considered">#</a></h1>
+<p>Before jumping in, I looked at several options:</p>
+<h3 id="1-writeas--bearblog"><strong>1. Write.as / BearBlog</strong><a hidden class="anchor" aria-hidden="true" href="#1-writeas--bearblog">#</a></h3>
+<p>They were beautifully minimal — but I eventually realized I&rsquo;d want more customization.</p>
+<h3 id="2-substack--medium"><strong>2. Substack / Medium</strong><a hidden class="anchor" aria-hidden="true" href="#2-substack--medium">#</a></h3>
+<p>Great writing experience, but:</p>
+<ul>
+<li>No full control</li>
+<li>No real customization</li>
+<li>Poor for dev-heavy posts</li>
+<li>Hard to design my own structure later</li>
+</ul>
+<h3 id="3-blogger--wordpresscom"><strong>3. Blogger / WordPress.com</strong><a hidden class="anchor" aria-hidden="true" href="#3-blogger--wordpresscom">#</a></h3>
+<p>These felt too old-school or too bloated.</p>
+<h3 id="4-static-site-generators-like"><strong>4. Static site generators</strong> like:<a hidden class="anchor" aria-hidden="true" href="#4-static-site-generators-like">#</a></h3>
+<ul>
+<li><strong>Hugo</strong></li>
+<li><strong>Jekyll</strong></li>
+<li><strong>Astro</strong></li>
+<li><strong>11ty</strong></li>
+</ul>
+<p>These gave full control but required some setup — still worth it.</p>
+<hr>
+<h1 id="-why-i-chose-hugo--cloudflare-pages">🚀 <strong>Why I Chose Hugo + Cloudflare Pages</strong><a hidden class="anchor" aria-hidden="true" href="#-why-i-chose-hugo--cloudflare-pages">#</a></h1>
+<p>This stack won for a few reasons:</p>
+<h3 id="-crazy-fast-builds-hugo-compiles-instantly">✔ <strong>Crazy fast builds</strong> (Hugo compiles instantly)<a hidden class="anchor" aria-hidden="true" href="#-crazy-fast-builds-hugo-compiles-instantly">#</a></h3>
+<h3 id="-markdown-content">✔ <strong>Markdown content</strong><a hidden class="anchor" aria-hidden="true" href="#-markdown-content">#</a></h3>
+<h3 id="-free-static-hosting-with-cloudflare-pages">✔ <strong>Free static hosting with Cloudflare Pages</strong><a hidden class="anchor" aria-hidden="true" href="#-free-static-hosting-with-cloudflare-pages">#</a></h3>
+<h3 id="-automatic-https">✔ <strong>Automatic HTTPS</strong><a hidden class="anchor" aria-hidden="true" href="#-automatic-https">#</a></h3>
+<h3 id="-git-based-workflow">✔ <strong>Git-based workflow</strong><a hidden class="anchor" aria-hidden="true" href="#-git-based-workflow">#</a></h3>
+<h3 id="-easy-custom-domain">✔ <strong>Easy custom domain</strong><a hidden class="anchor" aria-hidden="true" href="#-easy-custom-domain">#</a></h3>
+<h3 id="-future-customization-is-limitless">✔ <strong>Future customization is limitless</strong><a hidden class="anchor" aria-hidden="true" href="#-future-customization-is-limitless">#</a></h3>
+<p>And the PaperMod theme made the whole site look clean and modern with almost zero effort.</p>
+<p>So the decision was made:<br>
+<strong>Hugo for content → Cloudflare Pages for hosting.</strong></p>
+<hr>
+<h1 id="-the-actual-steps-i-took-so-you-can-do-it-too">🧱 <strong>The Actual Steps I Took (So You Can Do It Too)</strong><a hidden class="anchor" aria-hidden="true" href="#-the-actual-steps-i-took-so-you-can-do-it-too">#</a></h1>
+<p>Here&rsquo;s exactly how I did it:</p>
+<hr>
+<h2 id="1-install-hugo"><strong>1. Install Hugo</strong><a hidden class="anchor" aria-hidden="true" href="#1-install-hugo">#</a></h2>
+<p>On Windows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>choco install hugo
+</span></span></code></pre></div><p>Check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo version
+</span></span></code></pre></div><hr>
+<h2 id="2-create-a-new-hugo-site"><strong>2. Create a new Hugo site</strong><a hidden class="anchor" aria-hidden="true" href="#2-create-a-new-hugo-site">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site Blog
+</span></span><span style="display:flex;"><span>cd Blog
+</span></span></code></pre></div><hr>
+<h2 id="3-add-papermod-theme"><strong>3. Add PaperMod theme</strong><a hidden class="anchor" aria-hidden="true" href="#3-add-papermod-theme">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span><span style="display:flex;"><span>git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span></code></pre></div><p>Edit <code>hugo.toml</code> to include:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">theme</span> = <span style="color:#e6db74">&#34;PaperMod&#34;</span>
+</span></span></code></pre></div><hr>
+<h2 id="4-create-first-pages"><strong>4. Create first pages</strong><a hidden class="anchor" aria-hidden="true" href="#4-create-first-pages">#</a></h2>
+<p>Homepage content, About page, and first post.</p>
+<p>Example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/hello-world.md
+</span></span></code></pre></div><p>I edited them later to add proper text.</p>
+<hr>
+<h2 id="5-preview-locally"><strong>5. Preview locally</strong><a hidden class="anchor" aria-hidden="true" href="#5-preview-locally">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D
+</span></span></code></pre></div><p>This was the moment where I finally <em>saw</em> my site.</p>
+<hr>
+<h2 id="6-push-to-github"><strong>6. Push to GitHub</strong><a hidden class="anchor" aria-hidden="true" href="#6-push-to-github">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;Initial commit&#34;</span>
+</span></span><span style="display:flex;"><span>git branch -M main
+</span></span><span style="display:flex;"><span>git remote add origin &lt;repo-url&gt;
+</span></span><span style="display:flex;"><span>git push -u origin main
+</span></span></code></pre></div><hr>
+<h2 id="7-deploy-to-cloudflare-pages"><strong>7. Deploy to Cloudflare Pages</strong><a hidden class="anchor" aria-hidden="true" href="#7-deploy-to-cloudflare-pages">#</a></h2>
+<p>This part was trickier.</p>
+<h3 id="at-first-i-accidentally-created-a-worker-instead-of-a-pages-project">At first, I accidentally created a <strong>Worker instead of a Pages project</strong><a hidden class="anchor" aria-hidden="true" href="#at-first-i-accidentally-created-a-worker-instead-of-a-pages-project">#</a></h3>
+<p>This resulted in Cloudflare ignoring Hugo entirely and showing only:</p>
+<pre tabindex="0"><code>Hello world
+</code></pre><p>And later a <strong>404 page</strong>.</p>
+<p>I spent time debugging it until I realized:</p>
+<p>👉 I must use <strong>Pages</strong>, not Workers.</p>
+<p>So I deleted the Worker and created a <strong>Pages → Connect to Git</strong> project.</p>
+<p>Inside Cloudflare Pages, I set:</p>
+<ul>
+<li>Build command:
+<pre tabindex="0"><code>hugo
+</code></pre></li>
+<li>Output directory:
+<pre tabindex="0"><code>public
+</code></pre></li>
+<li>Env variable:
+<pre tabindex="0"><code>HUGO_VERSION = 0.152.2
+</code></pre></li>
+</ul>
+<p>Then Cloudflare finally ran a real build.</p>
+<hr>
+<h2 id="8-connecting-my-tech-domain"><strong>8. Connecting my .tech domain</strong><a hidden class="anchor" aria-hidden="true" href="#8-connecting-my-tech-domain">#</a></h2>
+<p>When my domain became available, I added:</p>
+<pre tabindex="0"><code>blog.krish2005.tech
+</code></pre><p>Cloudflare automatically configured DNS and HTTPS.</p>
+<p>Seeing my site live on a real domain was <em>so satisfying</em>.</p>
+<hr>
+<h1 id="-problems-i-faced--how-i-solved-them">🧩 <strong>Problems I Faced &amp; How I Solved Them</strong><a hidden class="anchor" aria-hidden="true" href="#-problems-i-faced--how-i-solved-them">#</a></h1>
+<h3 id="-problem-1--cloudflare-kept-showing-hello-world">❌ Problem 1 — Cloudflare kept showing &ldquo;Hello world&rdquo;<a hidden class="anchor" aria-hidden="true" href="#-problem-1--cloudflare-kept-showing-hello-world">#</a></h3>
+<p>This was because it was deploying as a <strong>Worker</strong>, not a Page.</p>
+<p><strong>Fix:</strong> Delete Worker → Create Pages project.</p>
+<hr>
+<h3 id="-problem-2--404-after-deployment">❌ Problem 2 — 404 after deployment<a hidden class="anchor" aria-hidden="true" href="#-problem-2--404-after-deployment">#</a></h3>
+<p>This happened because Cloudflare deployed <strong>0 files</strong>.</p>
+<p><strong>Fix:</strong>
+Ensure output directory = <code>public</code>
+And Hugo actually builds properly.</p>
+<hr>
+<h3 id="-problem-3--couldnt-change-pagesdev-url">❌ Problem 3 — Couldn&rsquo;t change <code>.pages.dev</code> URL<a hidden class="anchor" aria-hidden="true" href="#-problem-3--couldnt-change-pagesdev-url">#</a></h3>
+<p>Turns out: Page subdomains are fixed.
+Solution: use my custom <code>.tech</code> domain instead.</p>
+<hr>
+<h1 id="-what-i-learned">🎉 <strong>What I Learned</strong><a hidden class="anchor" aria-hidden="true" href="#-what-i-learned">#</a></h1>
+<ul>
+<li>Static site generators are powerful once you get past the initial setup.</li>
+<li>Cloudflare Pages is one of the best free dev tools available today.</li>
+<li>A blog doesn&rsquo;t have to be perfect — it just needs to exist.</li>
+<li>Writing is easier when you own your space.</li>
+</ul>
+<hr>
+<h1 id="-what">🌱 <strong>What&rsquo;s next?</strong><a hidden class="anchor" aria-hidden="true" href="#-what">#</a></h1>
+<p>I&rsquo;ll be writing about:</p>
+<ul>
+<li>Things I learn</li>
+<li>Projects I build</li>
+<li>Tech experiments</li>
+<li>Mistakes &amp; debugging stories</li>
+<li>Personal growth</li>
+</ul>
+<p>This blog is not just a website — it&rsquo;s a timeline of me becoming a better developer.</p>
+<p>If you&rsquo;ve read this far:
+<strong>Thanks for joining me on day one.</strong></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/setup/">Setup</a></li>
+      <li><a href="http://localhost:1313/tags/hugo/">Hugo</a></li>
+      <li><a href="http://localhost:1313/tags/cloudflare/">Cloudflare</a></li>
+      <li><a href="http://localhost:1313/tags/blogging/">Blogging</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">Krish&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

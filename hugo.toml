@@ -1,5 +1,35 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://blog.krish2005.tech/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = "Krish's Blog"
 theme = "PaperMod"
+[params]
+    customCSS = ["css/extended/custom.css"]
+    search= true
 
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 1
+
+  [[menu.main]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/krish-teckchandani/"
+    weight = 2
+
+  [[menu.main]]
+    name = "GitHub"
+    url = "https://github.com/krish2005tech"
+    weight = 3
+    [[menu.main]]
+    name = "Search"
+    url = "/search/"
+    weight = 4
+
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
