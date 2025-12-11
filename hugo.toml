@@ -33,3 +33,10 @@ theme = "PaperMod"
       unsafe = true
 [outputs]
   home = ["HTML", "RSS", "JSON"]
+
+[params.assets]
+  favicon = "favicon.ico"
+  favicon16x16 = "Favicon.png"
+  favicon32x32 = "Favicon.png"
+  apple_touch_icon = "Favicon.png"
+
