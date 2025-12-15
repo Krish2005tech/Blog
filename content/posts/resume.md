@@ -5,7 +5,7 @@ description: "A breakdown of my mindset, workflow, and technical process behind 
 tags: ["resume", "cloudflare", "webdev", "deployment", "personal"]
 ---
 
-# How I Built and Deployed My Online Resume
+<!-- # How I Built and Deployed My Online Resume -->
 
 From local development to GitHub to Cloudflare Pages to custom domain.
 
