@@ -43,7 +43,7 @@ But of course, it evolved.
 
 ### Key Features
 
-- 🔍 **Search from 613 courses** floated this semester  
+- 🔍 **Search from 466 courses** floated this semester  
   Just type the course name and add it - no slot decoding needed.
 
 - 🗓️ **Automatic timetable generation**  
