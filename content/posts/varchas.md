@@ -73,7 +73,6 @@ But what I choose to embrace is the **journey** and the deep bond I formed with 
 
 We knew each other before, but never like this. We were there for each other at our breaking points, gave each other strength, and carried both ourselves and Varchas together till the very end, especially that moment of peace after the **musical night**, which officially marked the successful conclusion of Varchas.
 
-<!-- ![Varchas 2025 Team](/images/varchas.jpg -->
 <img src="/images/varchas.jpg" alt="Varchas 2025 Team" style="width:100%; border-radius:10px;">
 
 I want to once again thank  
