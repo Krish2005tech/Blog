@@ -3,7 +3,8 @@ title: "About Me"
 description: "A little about who I am"
 date: 2025-12-11
 ---
-<img src="/images/me.jpg" alt="My photo" style="width:30%; border-radius:10px;">
+<!-- <img src="/images/me.jpg" alt="My photo" style="width:30%; border-radius:10px; display:block; margin:auto;"> -->
+<img src="/images/me.jpg" alt="My photo" style="max-width:150px; border-radius:10px;">
 
 
 
